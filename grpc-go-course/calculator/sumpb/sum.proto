@@ -1,0 +1,71 @@
+syntax ="proto3";
+package sum;
+option go_package="sumpb";
+
+message Operands {
+    int64 operand1 =1;
+    int64 operand2 =2 ;
+
+}
+
+message SumRequest {
+    Operands operands = 1;
+
+}
+
+message OperandAvg {
+    int32 operand = 1;
+}
+
+message SumResponse {
+    int64 result = 1;
+}
+
+message Operand_Number {
+    int64 operand = 1;
+}
+
+message DecomposenumberRequest {
+    Operand_Number operand_Number = 1;
+}
+
+message DecomposenumberResponse {
+    int64 result = 1;
+}
+
+message ComputeAverageRequest {
+    OperandAvg operandAvg = 1;
+}
+
+message ComputeAverageResponse{
+  double result = 1;
+}
+
+message FindmaxRequest{
+    int32 num = 1;
+
+}
+
+message FindmaxResponse{
+  int32 result = 1;
+}
+
+message SquareRootRequest {
+ int32 number = 1;
+}
+
+message SquareRootResponse{
+    double number_root = 1; 
+}
+
+service GreetService { 
+    //unary 
+    rpc Sum(SumRequest) returns (SumResponse){}; 
+    rpc Decomposenumber(DecomposenumberRequest) returns (stream DecomposenumberResponse){};
+    rpc ComputeAverage(stream ComputeAverageRequest) returns (ComputeAverageResponse){};
+    rpc Findmax(stream FindmaxRequest) returns (stream FindmaxResponse){};
+    //error handling 
+    //this RPC will throw error if sent number is negative 
+    //the error being sent is of type INVALID_ARGUMENT
+    rpc SquareRoot( SquareRootRequest) returns (SquareRootResponse){};
+}

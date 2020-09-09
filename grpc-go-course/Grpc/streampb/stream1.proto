@@ -1,0 +1,16 @@
+syntax = "proto3";
+package stream1;
+option go_package ="streampb";
+
+message CreateRequest {
+    string id = 1 ;
+    string name= 2;
+}
+
+message CreateResponse {
+    string name= 2;
+}
+
+service SimpletestService {
+    rpc CreateBlog (stream CreateRequest) returns (stream CreateResponse){};
+}
